@@ -26,11 +26,10 @@ namespace Net.Utils.ErrorHandler.Extensions
 
         public static string ToErrorMessage(this Enum error)
         {
-            return error
-                .GetType()
+            var attribute = error.GetType()
                 .GetField(error.ToString())!
-                .GetCustomAttribute<ErrorAttribute>()!
-                .Message;
+                .GetCustomAttribute<ErrorAttribute>();
+            return attribute.Message ?? throw new ArgumentException($"Member of '{nameof(error)}' enum must implement '{nameof(ErrorAttribute)}' attribute.", nameof(error));
         }
     }
 }
