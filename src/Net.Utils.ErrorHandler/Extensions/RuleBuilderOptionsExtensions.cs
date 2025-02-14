@@ -5,6 +5,14 @@ namespace Net.Utils.ErrorHandler.Extensions
 {
     public static class RuleBuilderOptionsExtensions
     {
+        public static IRuleBuilderOptions<T, TProperty> WithError<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, Enum error, Func<T, object> stateProvider)
+        {
+            return rule
+                .WithState(stateProvider)
+                .WithErrorCode(error)
+                .WithErrorMessage(error);
+        }
+
         public static IRuleBuilderOptions<T, TProperty> WithError<T, TProperty>(this IRuleBuilderOptions<T, TProperty> rule, Enum error, object? customState = null)
         {
             return rule
